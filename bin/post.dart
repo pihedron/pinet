@@ -17,4 +17,11 @@ class Post {
     tree.children.add(createdNode);
     raw = tree.children.map((e) => e.toString()).join('\n');
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'raw': raw,
+    };
+  }
 }
