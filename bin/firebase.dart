@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:http/http.dart';
 import 'package:dotenv/dotenv.dart';
+import 'package:http/http.dart';
 
 const sucess = 200;
 
-var env = DotEnv()..load();
+var prod = Platform.environment['PRODUCTION'];
+var dotenv = DotEnv()..load();
+Map<String, String> env = prod == 'true' ? Platform.environment : dotenv.map;
 
 var firebaseConfig = {
   'apiKey': env['API_KEY'],
@@ -84,10 +87,3 @@ class Firebase {
     return body;
   }
 }
-
-// void main() async {
-//   var fb = Firebase(firebaseConfig['projectId']!);
-//   var doc = await fb.read(['groups', 'education']);
-//   int count = int.parse(doc.fields['count']!['integerValue']!);
-//   print(await fb.update(['groups', 'education'], { 'count': 0 }, 'count'));
-// }
